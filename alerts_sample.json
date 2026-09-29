@@ -1,0 +1,402 @@
+[
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0013",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:01:48.766618"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0010",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:01:45.764659"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0012",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:01:21.719567"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0013",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:01:03.675830"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0009",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:57.665874"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0002",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:57.655604"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0007",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:54.644215"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0004",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:39.631958"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0018",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:21.612400"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0008",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:12.588227"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0016",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T21:00:06.574463"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0013",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:59:57.558518"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0005",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:59:51.536805"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0011",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:59:24.512743"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0015",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:59:06.470464"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0010",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:58:54.442929"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0001",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:58:42.408467"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0019",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:58:36.405554"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0004",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:58:30.385660"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0008",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:58:12.342690"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0000",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:58:00.310800"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0002",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:57:39.269797"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0014",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:57:21.213676"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0016",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:56:45.122580"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0013",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:56:45.121030"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0012",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:56:45.112143"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0005",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:56:36.099011"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0017",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:56:21.044361"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0001",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:55:56.976365"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0011",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:55:44.950403"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0006",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:55:41.939465"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0004",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:54:59.864444"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0015",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:54:41.838356"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0003",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:54:35.825438"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0009",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:54:29.815207"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0000",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:54:11.767514"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0007",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:53:59.742666"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0018",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:53:56.729693"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0008",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:53:47.715424"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0002",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:53:44.704918"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0011",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:53:14.623862"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0019",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:53:11.611786"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0000",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:52:38.538950"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0010",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:52:02.425353"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0017",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:51:56.402969"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0005",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:51:26.324003"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0001",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:51:20.321304"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0012",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:51:14.295486"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0015",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:51:08.274916"
+  },
+  {
+    "rule": "vehicle_idle_threshold",
+    "vehicle_id": "veh_0003",
+    "detail": {
+      "idle_seconds": 12
+    },
+    "created_at": "2026-09-29T20:50:53.230081"
+  }
+]

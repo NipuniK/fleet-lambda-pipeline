@@ -1,0 +1,10 @@
+speed-layer-1  | {"ts": 1790715616.907, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715632.028, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715632.316, "level": "INFO", "stage": "processing.speed_layer", "message": "batch written"}
+speed-layer-1  | {"ts": 1790715646.907, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715662.004, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715675.737, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715690.796, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715692.445, "level": "INFO", "stage": "processing.speed_layer", "message": "batch written"}
+speed-layer-1  | {"ts": 1790715705.817, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}
+speed-layer-1  | {"ts": 1790715720.818, "level": "INFO", "stage": "processing.speed_layer", "message": "raw batch written"}

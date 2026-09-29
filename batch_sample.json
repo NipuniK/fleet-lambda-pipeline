@@ -1,0 +1,182 @@
+[
+  {
+    "vehicle_id": "veh_0012",
+    "total_fare": 11.16,
+    "fuel_cost": 20.48,
+    "maintenance_cost": 20.54,
+    "total_cost": 41.019999999999996,
+    "net_profit": -29.859999999999996,
+    "unprofitable": true
+  },
+  {
+    "vehicle_id": "veh_0001",
+    "total_fare": 25.330000000000002,
+    "fuel_cost": 44.15,
+    "maintenance_cost": 0,
+    "total_cost": 44.15,
+    "net_profit": -18.819999999999997,
+    "unprofitable": true
+  },
+  {
+    "vehicle_id": "veh_0007",
+    "total_fare": 38.050000000000004,
+    "fuel_cost": 48.66,
+    "maintenance_cost": 0,
+    "total_cost": 48.66,
+    "net_profit": -10.609999999999992,
+    "unprofitable": true
+  },
+  {
+    "vehicle_id": "veh_0002",
+    "total_fare": 41.85,
+    "fuel_cost": 42.02,
+    "maintenance_cost": 0,
+    "total_cost": 42.02,
+    "net_profit": -0.1700000000000017,
+    "unprofitable": true
+  },
+  {
+    "vehicle_id": "veh_0004",
+    "total_fare": 47.14,
+    "fuel_cost": 44.97,
+    "maintenance_cost": 0,
+    "total_cost": 44.97,
+    "net_profit": 2.1700000000000017,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0019",
+    "total_fare": 43.10000000000001,
+    "fuel_cost": 36.78,
+    "maintenance_cost": 0,
+    "total_cost": 36.78,
+    "net_profit": 6.320000000000007,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0000",
+    "total_fare": 63.78,
+    "fuel_cost": 42.93,
+    "maintenance_cost": 0,
+    "total_cost": 42.93,
+    "net_profit": 20.85,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0017",
+    "total_fare": 52.300000000000004,
+    "fuel_cost": 15.85,
+    "maintenance_cost": 6.8,
+    "total_cost": 22.65,
+    "net_profit": 29.650000000000006,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0016",
+    "total_fare": 76.25999999999999,
+    "fuel_cost": 39.41,
+    "maintenance_cost": 0,
+    "total_cost": 39.41,
+    "net_profit": 36.849999999999994,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0005",
+    "total_fare": 54.589999999999996,
+    "fuel_cost": 17.22,
+    "maintenance_cost": 0,
+    "total_cost": 17.22,
+    "net_profit": 37.37,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0009",
+    "total_fare": 73.42000000000002,
+    "fuel_cost": 27.99,
+    "maintenance_cost": 0,
+    "total_cost": 27.99,
+    "net_profit": 45.43000000000002,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0014",
+    "total_fare": 122.24999999999999,
+    "fuel_cost": 35.47,
+    "maintenance_cost": 29.7,
+    "total_cost": 65.17,
+    "net_profit": 57.079999999999984,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0011",
+    "total_fare": 93.28999999999999,
+    "fuel_cost": 16.14,
+    "maintenance_cost": 20.04,
+    "total_cost": 36.18,
+    "net_profit": 57.10999999999999,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0006",
+    "total_fare": 119.25999999999998,
+    "fuel_cost": 46.82,
+    "maintenance_cost": 0,
+    "total_cost": 46.82,
+    "net_profit": 72.43999999999997,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0003",
+    "total_fare": 119.56,
+    "fuel_cost": 32.44,
+    "maintenance_cost": 12.79,
+    "total_cost": 45.23,
+    "net_profit": 74.33000000000001,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0013",
+    "total_fare": 118.16,
+    "fuel_cost": 16.61,
+    "maintenance_cost": 17.78,
+    "total_cost": 34.39,
+    "net_profit": 83.77,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0010",
+    "total_fare": 147.67000000000002,
+    "fuel_cost": 24.68,
+    "maintenance_cost": 37.48,
+    "total_cost": 62.16,
+    "net_profit": 85.51000000000002,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0015",
+    "total_fare": 115.91,
+    "fuel_cost": 23.26,
+    "maintenance_cost": 0,
+    "total_cost": 23.26,
+    "net_profit": 92.64999999999999,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0018",
+    "total_fare": 122.47999999999999,
+    "fuel_cost": 28.66,
+    "maintenance_cost": 0,
+    "total_cost": 28.66,
+    "net_profit": 93.82,
+    "unprofitable": false
+  },
+  {
+    "vehicle_id": "veh_0008",
+    "total_fare": 133.5,
+    "fuel_cost": 27.65,
+    "maintenance_cost": 0,
+    "total_cost": 27.65,
+    "net_profit": 105.85,
+    "unprofitable": false
+  }
+]

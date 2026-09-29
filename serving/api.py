@@ -37,6 +37,12 @@ def serve_dashboard():
     with open(dashboard_path, "r") as f:
         return f.read()
 
+@app.get("/presentation", response_class=HTMLResponse)
+def serve_presentation():
+    presentation_path = os.path.join(os.path.dirname(__file__), "presentation.html")
+    with open(presentation_path, "r") as f:
+        return f.read()
+
 
 @app.get("/health")
 def health():

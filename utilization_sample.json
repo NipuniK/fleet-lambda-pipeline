@@ -1,0 +1,452 @@
+[
+  {
+    "window_start": "2026-09-29T20:59:00",
+    "window_end": "2026-09-29T21:00:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.56,
+    "trips_in_window": 19,
+    "total_fare": 97.08000000000001
+  },
+  {
+    "window_start": "2026-09-29T20:59:00",
+    "window_end": "2026-09-29T21:00:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.55,
+    "trips_in_window": 11,
+    "total_fare": 55.09
+  },
+  {
+    "window_start": "2026-09-29T20:59:00",
+    "window_end": "2026-09-29T21:00:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.7666666666666667,
+    "trips_in_window": 5,
+    "total_fare": 22.68
+  },
+  {
+    "window_start": "2026-09-29T20:59:00",
+    "window_end": "2026-09-29T21:00:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.5857142857142857,
+    "trips_in_window": 22,
+    "total_fare": 96.63000000000001
+  },
+  {
+    "window_start": "2026-09-29T20:59:00",
+    "window_end": "2026-09-29T21:00:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.775,
+    "trips_in_window": 7,
+    "total_fare": 26.21
+  },
+  {
+    "window_start": "2026-09-29T20:58:00",
+    "window_end": "2026-09-29T20:59:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 1,
+    "trips_in_window": 0,
+    "total_fare": 0
+  },
+  {
+    "window_start": "2026-09-29T20:58:00",
+    "window_end": "2026-09-29T20:59:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.48333333333333334,
+    "trips_in_window": 11,
+    "total_fare": 61.56
+  },
+  {
+    "window_start": "2026-09-29T20:58:00",
+    "window_end": "2026-09-29T20:59:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.5142857142857142,
+    "trips_in_window": 25,
+    "total_fare": 120.39
+  },
+  {
+    "window_start": "2026-09-29T20:58:00",
+    "window_end": "2026-09-29T20:59:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.74,
+    "trips_in_window": 13,
+    "total_fare": 56.379999999999995
+  },
+  {
+    "window_start": "2026-09-29T20:58:00",
+    "window_end": "2026-09-29T20:59:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.7,
+    "trips_in_window": 4,
+    "total_fare": 16.380000000000003
+  },
+  {
+    "window_start": "2026-09-29T20:57:00",
+    "window_end": "2026-09-29T20:58:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.7333333333333333,
+    "trips_in_window": 4,
+    "total_fare": 19.68
+  },
+  {
+    "window_start": "2026-09-29T20:57:00",
+    "window_end": "2026-09-29T20:58:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.7166666666666667,
+    "trips_in_window": 6,
+    "total_fare": 25.590000000000003
+  },
+  {
+    "window_start": "2026-09-29T20:57:00",
+    "window_end": "2026-09-29T20:58:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.52,
+    "trips_in_window": 16,
+    "total_fare": 60.370000000000005
+  },
+  {
+    "window_start": "2026-09-29T20:57:00",
+    "window_end": "2026-09-29T20:58:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.45714285714285713,
+    "trips_in_window": 25,
+    "total_fare": 124.49000000000001
+  },
+  {
+    "window_start": "2026-09-29T20:57:00",
+    "window_end": "2026-09-29T20:58:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.925,
+    "trips_in_window": 1,
+    "total_fare": 7.16
+  },
+  {
+    "window_start": "2026-09-29T20:56:00",
+    "window_end": "2026-09-29T20:57:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.6491228070175439,
+    "trips_in_window": 8,
+    "total_fare": 37.85
+  },
+  {
+    "window_start": "2026-09-29T20:56:00",
+    "window_end": "2026-09-29T20:57:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.5413533834586466,
+    "trips_in_window": 20,
+    "total_fare": 123.02000000000001
+  },
+  {
+    "window_start": "2026-09-29T20:56:00",
+    "window_end": "2026-09-29T20:57:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.6578947368421053,
+    "trips_in_window": 4,
+    "total_fare": 26.28
+  },
+  {
+    "window_start": "2026-09-29T20:56:00",
+    "window_end": "2026-09-29T20:57:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.4842105263157895,
+    "trips_in_window": 18,
+    "total_fare": 88.14
+  },
+  {
+    "window_start": "2026-09-29T20:56:00",
+    "window_end": "2026-09-29T20:57:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.9649122807017544,
+    "trips_in_window": 0,
+    "total_fare": 0
+  },
+  {
+    "window_start": "2026-09-29T20:55:00",
+    "window_end": "2026-09-29T20:56:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.7642857142857142,
+    "trips_in_window": 10,
+    "total_fare": 64.63
+  },
+  {
+    "window_start": "2026-09-29T20:55:00",
+    "window_end": "2026-09-29T20:56:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.66,
+    "trips_in_window": 11,
+    "total_fare": 59.980000000000004
+  },
+  {
+    "window_start": "2026-09-29T20:55:00",
+    "window_end": "2026-09-29T20:56:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.55,
+    "trips_in_window": 8,
+    "total_fare": 34.62
+  },
+  {
+    "window_start": "2026-09-29T20:55:00",
+    "window_end": "2026-09-29T20:56:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.7,
+    "trips_in_window": 6,
+    "total_fare": 31.79
+  },
+  {
+    "window_start": "2026-09-29T20:55:00",
+    "window_end": "2026-09-29T20:56:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.55,
+    "trips_in_window": 6,
+    "total_fare": 36.519999999999996
+  },
+  {
+    "window_start": "2026-09-29T20:54:00",
+    "window_end": "2026-09-29T20:55:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.4,
+    "trips_in_window": 11,
+    "total_fare": 64.52
+  },
+  {
+    "window_start": "2026-09-29T20:54:00",
+    "window_end": "2026-09-29T20:55:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.64,
+    "trips_in_window": 17,
+    "total_fare": 66.59
+  },
+  {
+    "window_start": "2026-09-29T20:54:00",
+    "window_end": "2026-09-29T20:55:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.4666666666666667,
+    "trips_in_window": 8,
+    "total_fare": 63.980000000000004
+  },
+  {
+    "window_start": "2026-09-29T20:54:00",
+    "window_end": "2026-09-29T20:55:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.8142857142857143,
+    "trips_in_window": 7,
+    "total_fare": 35.09
+  },
+  {
+    "window_start": "2026-09-29T20:54:00",
+    "window_end": "2026-09-29T20:55:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.65,
+    "trips_in_window": 4,
+    "total_fare": 28.290000000000003
+  },
+  {
+    "window_start": "2026-09-29T20:53:00",
+    "window_end": "2026-09-29T20:54:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.5,
+    "trips_in_window": 9,
+    "total_fare": 30.130000000000003
+  },
+  {
+    "window_start": "2026-09-29T20:53:00",
+    "window_end": "2026-09-29T20:54:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.65,
+    "trips_in_window": 9,
+    "total_fare": 44.58
+  },
+  {
+    "window_start": "2026-09-29T20:53:00",
+    "window_end": "2026-09-29T20:54:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.575,
+    "trips_in_window": 5,
+    "total_fare": 31.909999999999997
+  },
+  {
+    "window_start": "2026-09-29T20:53:00",
+    "window_end": "2026-09-29T20:54:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.7071428571428572,
+    "trips_in_window": 18,
+    "total_fare": 80.24
+  },
+  {
+    "window_start": "2026-09-29T20:53:00",
+    "window_end": "2026-09-29T20:54:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.68,
+    "trips_in_window": 12,
+    "total_fare": 59.519999999999996
+  },
+  {
+    "window_start": "2026-09-29T20:52:00",
+    "window_end": "2026-09-29T20:53:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.5714285714285714,
+    "trips_in_window": 16,
+    "total_fare": 74.36999999999999
+  },
+  {
+    "window_start": "2026-09-29T20:52:00",
+    "window_end": "2026-09-29T20:53:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.26666666666666666,
+    "trips_in_window": 18,
+    "total_fare": 80.45
+  },
+  {
+    "window_start": "2026-09-29T20:52:00",
+    "window_end": "2026-09-29T20:53:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.7333333333333333,
+    "trips_in_window": 5,
+    "total_fare": 32.209999999999994
+  },
+  {
+    "window_start": "2026-09-29T20:52:00",
+    "window_end": "2026-09-29T20:53:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.69,
+    "trips_in_window": 9,
+    "total_fare": 29.809999999999995
+  },
+  {
+    "window_start": "2026-09-29T20:52:00",
+    "window_end": "2026-09-29T20:53:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.375,
+    "trips_in_window": 9,
+    "total_fare": 47.06
+  },
+  {
+    "window_start": "2026-09-29T20:51:00",
+    "window_end": "2026-09-29T20:52:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.84,
+    "trips_in_window": 8,
+    "total_fare": 39.26
+  },
+  {
+    "window_start": "2026-09-29T20:51:00",
+    "window_end": "2026-09-29T20:52:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.7,
+    "trips_in_window": 7,
+    "total_fare": 27.32
+  },
+  {
+    "window_start": "2026-09-29T20:51:00",
+    "window_end": "2026-09-29T20:52:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.325,
+    "trips_in_window": 8,
+    "total_fare": 37.93
+  },
+  {
+    "window_start": "2026-09-29T20:51:00",
+    "window_end": "2026-09-29T20:52:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.36666666666666664,
+    "trips_in_window": 14,
+    "total_fare": 68.85000000000001
+  },
+  {
+    "window_start": "2026-09-29T20:51:00",
+    "window_end": "2026-09-29T20:52:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.7071428571428572,
+    "trips_in_window": 17,
+    "total_fare": 66.12
+  },
+  {
+    "window_start": "2026-09-29T20:50:00",
+    "window_end": "2026-09-29T20:51:00",
+    "zone": "university",
+    "active_vehicles": 2,
+    "idle_ratio": 0.975,
+    "trips_in_window": 0,
+    "total_fare": 0
+  },
+  {
+    "window_start": "2026-09-29T20:50:00",
+    "window_end": "2026-09-29T20:51:00",
+    "zone": "airport",
+    "active_vehicles": 3,
+    "idle_ratio": 0.36666666666666664,
+    "trips_in_window": 16,
+    "total_fare": 67.34
+  },
+  {
+    "window_start": "2026-09-29T20:50:00",
+    "window_end": "2026-09-29T20:51:00",
+    "zone": "suburbs_south",
+    "active_vehicles": 3,
+    "idle_ratio": 0.3333333333333333,
+    "trips_in_window": 14,
+    "total_fare": 65.09
+  },
+  {
+    "window_start": "2026-09-29T20:50:00",
+    "window_end": "2026-09-29T20:51:00",
+    "zone": "suburbs_north",
+    "active_vehicles": 7,
+    "idle_ratio": 0.7,
+    "trips_in_window": 16,
+    "total_fare": 79.48
+  },
+  {
+    "window_start": "2026-09-29T20:50:00",
+    "window_end": "2026-09-29T20:51:00",
+    "zone": "downtown",
+    "active_vehicles": 4,
+    "idle_ratio": 0.55,
+    "trips_in_window": 16,
+    "total_fare": 74.46
+  }
+]

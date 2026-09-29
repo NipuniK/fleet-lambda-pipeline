@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Ops Architecture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-glow: rgba(56, 189, 248, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --gradient-1: linear-gradient(135deg, #38bdf8, #818cf8);
+            --gradient-2: linear-gradient(135deg, #10b981, #3b82f6);
+            --gradient-3: linear-gradient(135deg, #f43f5e, #fb923c);
+            --gradient-4: linear-gradient(135deg, #a855f7, #ec4899);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(129, 140, 248, 0.15), transparent 25%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-top: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 1rem 0 6rem;
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+            opacity: 0.8;
+        }
+
+        .glass-card:nth-child(2)::before { background: var(--gradient-2); }
+        .glass-card:nth-child(3)::before { background: var(--gradient-3); }
+        .glass-card:nth-child(4)::before { background: var(--gradient-4); }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+        }
+
+        .card-text {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #cbd5e1;
+        }
+
+        .cta-container {
+            text-align: center;
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            animation: fadeIn 1s ease-out 1s backwards;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 99px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #818cf8, #38bdf8);
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Diagram Styles */
+        .diagram-container {
+            grid-column: 1 / -1;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diagram-container h3 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.8rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .diagram-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 15px;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .node {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .node-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #f8fafc;
+        }
+
+        .node-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .node.source { border-top: 3px solid #38bdf8; }
+        .node.ingest { border-top: 3px solid #a855f7; }
+        .node.speed { border-top: 3px solid #10b981; }
+        .node.batch { border-top: 3px solid #f59e0b; }
+        .node.serve { border-top: 3px solid #f43f5e; }
+
+        .arrow {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .layer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .glass-card:nth-child(2) { animation-delay: 0.5s; }
+        .glass-card:nth-child(3) { animation-delay: 0.6s; }
+        .glass-card:nth-child(4) { animation-delay: 0.7s; }
+        .glass-card:nth-child(5) { animation-delay: 0.8s; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lambda Architecture</h1>
+        <h2>Real-Time Fleet Operations Pipeline</h2>
+    </header>
+
+    <div class="container">
+        
+        <!-- Architecture Diagram -->
+        <div class="diagram-container">
+            <h3>End-to-End Data Flow</h3>
+            <div class="diagram-grid">
+                
+                <!-- Sources -->
+                <div class="layer-column">
+                    <div class="node source">
+                        <div class="node-title">Telemetry</div>
+                        <div class="node-desc">Streaming GPS Events</div>
+                    </div>
+                    <div class="node source">
+                        <div class="node-title">Daily Costs</div>
+                        <div class="node-desc">Batch Cost Files</div>
+                    </div>
+                </div>
+
+                <div class="arrow">➔</div>
+
+                <!-- Ingestion -->
+                <div class="node ingest">
+                    <div class="node-title">Apache Kafka</div>
+                    <div class="node-desc">Topics: telemetry, daily-cost</div>
+                </div>
+
+                <div class="arrow">➔</div>
+
+                <!-- Processing Layers -->
+                <div class="layer-column">
+                    <div class="node speed">
+                        <div class="node-title">Spark Streaming</div>
+                        <div class="node-desc">Speed Layer (Live Util)</div>
+                    </div>
+                    <div class="node batch">
+                        <div class="node-title">Airflow & Spark</div>
+                        <div class="node-desc">Batch Layer (Daily Recon)</div>
+                    </div>
+                    <div class="node serve">
+                        <div class="node-title">Alert Watcher</div>
+                        <div class="node-desc">Live Health/Idle Watch</div>
+                    </div>
+                </div>
+
+                <div class="arrow">➔</div>
+
+                <!-- Serving -->
+                <div class="layer-column">
+                    <div class="node serve">
+                        <div class="node-title">PostgreSQL</div>
+                        <div class="node-desc">Serving Data Store</div>
+                    </div>
+                    <div class="node serve" style="border-color: #38bdf8;">
+                        <div class="node-title">FastAPI</div>
+                        <div class="node-desc">HTML Dashboard UI</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-icon">⚡</div>
+            <h3 class="card-title">1. The Speed Layer</h3>
+            <p class="card-text">
+                Consumes continuous vehicle telemetry from Kafka. It uses <strong>Spark Structured Streaming</strong> to perform windowed aggregations, calculating real-time fleet utilization, idle ratios, and active vehicle counts with extremely low latency.
+            </p>
+            <div class="tech-tags">
+                <span class="tag">Apache Kafka</span>
+                <span class="tag">PySpark Streaming</span>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-icon">🕰️</div>
+            <h3 class="card-title">2. The Batch Layer</h3>
+            <p class="card-text">
+                Runs once per simulated day. It joins the day's aggregated telemetry with static daily cost files to generate an auditable vehicle profitability report. Orchestrated completely by <strong>Apache Airflow</strong> to ensure consistency.
+            </p>
+            <div class="tech-tags">
+                <span class="tag">Apache Airflow</span>
+                <span class="tag">PySpark Batch</span>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-icon">🧠</div>
+            <h3 class="card-title">3. Why Lambda over Kappa?</h3>
+            <p class="card-text">
+                <strong>Correctness & Cost.</strong> Live utilization needs fast, approximate answers (Speed Layer). Profitability needs exact answers computed over bounded 24hr cost drops (Batch Layer). Lambda allows both queries to thrive without slowing down streaming for batch accuracy.
+            </p>
+            <div class="tech-tags">
+                <span class="tag">Architecture Decision</span>
+                <span class="tag">Trade-offs</span>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-icon">👁️</div>
+            <h3 class="card-title">4. Serving & Observability</h3>
+            <p class="card-text">
+                The layers converge on <strong>PostgreSQL</strong>. A dedicated Alert Watcher constantly monitors for stuck vehicles and missing data streams, instantly pushing alerts to <strong>FastAPI</strong>, alongside a fully structured JSON logging suite.
+            </p>
+            <div class="tech-tags">
+                <span class="tag">FastAPI</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">JSON Logging</span>
+            </div>
+        </div>
+
+        <div class="cta-container">
+            <a href="/" class="btn">View Live Dashboard 🚀</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
