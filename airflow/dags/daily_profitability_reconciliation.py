@@ -15,6 +15,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 from airflow.sensors.python import PythonSensor
 
 SIM_DAY_SECONDS = int(os.environ.get("SIM_DAY_SECONDS", 300))
@@ -31,14 +32,12 @@ def _find_cost_file(**context) -> bool:
     return len(files) > 0
 
 
-def _run_reconciliation(**context):
+def _prepare_args(**context):
     files = sorted(glob.glob(os.path.join(DROP_DIR, "costs_day_*.json")))
     latest = files[-1]
     sim_day = int(latest.split("_")[-1].split(".")[0])
-    os.system(
-        f"spark-submit /opt/airflow/processing/batch_reconciliation.py "
-        f"--sim-day {sim_day} --cost-file {latest}"
-    )
+    context['ti'].xcom_push(key='cost_file', value=latest)
+    context['ti'].xcom_push(key='sim_day', value=sim_day)
 
 
 default_args = {
@@ -63,9 +62,20 @@ with DAG(
         timeout=SIM_DAY_SECONDS,
     )
 
-    run_batch_job = PythonOperator(
+    prepare_args = PythonOperator(
+        task_id="prepare_args",
+        python_callable=_prepare_args,
+    )
+
+    run_batch_job = SparkSubmitOperator(
         task_id="run_batch_job",
-        python_callable=_run_reconciliation,
+        conn_id="spark_default",
+        application="/opt/airflow/processing/batch_reconciliation.py",
+        name="batch_reconciliation_{{ ti.xcom_pull(task_ids='prepare_args', key='sim_day') }}",
+        application_args=[
+            "--sim-day", "{{ ti.xcom_pull(task_ids='prepare_args', key='sim_day') }}",
+            "--cost-file", "{{ ti.xcom_pull(task_ids='prepare_args', key='cost_file') }}"
+        ],
     )
 
     check_output = BashOperator(
@@ -73,4 +83,4 @@ with DAG(
         bash_command="echo 'batch reconciliation task finished for this sim day'",
     )
 
-    wait_for_cost_file >> run_batch_job >> check_output
+    wait_for_cost_file >> prepare_args >> run_batch_job >> check_output

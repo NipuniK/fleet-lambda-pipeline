@@ -47,9 +47,7 @@ def main(sim_day: int, cost_file: str):
         .option("user", "fleet").option("password", "fleet")
         .option("driver", "org.postgresql.Driver")
         .load()
-        .filter(F.to_date(F.to_timestamp("timestamp")) == F.date_add(F.current_date(), -1 * (0)))
-        # NOTE: replace the filter above with your actual sim-day -> calendar-day mapping;
-        # for the demo, sim_day is usually easiest to store as its own column on ingest.
+        .filter(F.col("sim_day") == sim_day)
     )
 
     trip_agg = trips.groupBy("vehicle_id").agg(

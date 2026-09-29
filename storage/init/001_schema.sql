@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS raw_telemetry (
     status TEXT,
     fare DOUBLE PRECISION,
     zone TEXT,
-    "timestamp" DOUBLE PRECISION
+    "timestamp" DOUBLE PRECISION,
+    sim_day INT
 );
 
 -- Speed layer output: windowed utilization metrics per zone

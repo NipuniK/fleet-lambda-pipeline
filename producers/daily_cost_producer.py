@@ -17,6 +17,7 @@ from kafka import KafkaProducer
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
 from logging_config import get_logger  # noqa: E402
 from schemas import DAILY_COST_TOPIC  # noqa: E402
+from sim_clock import get_sim_day  # noqa: E402
 
 log = get_logger("ingestion.daily_cost")
 
@@ -54,18 +55,20 @@ def main():
     )
     log.info("daily cost producer started", extra={"fields": {"sim_day_seconds": SIM_DAY_SECONDS}})
 
-    sim_day = 0
+    last_day_processed = -1
     while True:
-        records, path = make_day_file(sim_day)
-        for r in records:
-            producer.send(DAILY_COST_TOPIC, value=r)
-        producer.flush()
-        log.info(
-            "daily cost file dropped",
-            extra={"fields": {"sim_day": sim_day, "path": path, "num_records": len(records)}},
-        )
-        sim_day += 1
-        time.sleep(SIM_DAY_SECONDS)
+        sim_day = get_sim_day()
+        if sim_day > last_day_processed:
+            records, path = make_day_file(sim_day)
+            for r in records:
+                producer.send(DAILY_COST_TOPIC, value=r)
+            producer.flush()
+            log.info(
+                "daily cost file dropped",
+                extra={"fields": {"sim_day": sim_day, "path": path, "num_records": len(records)}},
+            )
+            last_day_processed = sim_day
+        time.sleep(1)
 
 
 if __name__ == "__main__":

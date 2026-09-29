@@ -5,7 +5,7 @@ DAILY_COST_TOPIC = "daily-cost"
 
 TELEMETRY_FIELDS = [
     "trip_id", "driver_id", "vehicle_id", "lat", "lon", "speed",
-    "status", "fare", "zone", "timestamp",
+    "status", "fare", "zone", "timestamp", "sim_day",
 ]
 # status is one of: idle | enroute | on_trip
 

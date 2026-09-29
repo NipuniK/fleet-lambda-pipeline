@@ -1,7 +1,9 @@
 version: "3.8"
 
 x-airflow-common: &airflow-common
-  image: apache/airflow:2.9.3-python3.11
+  build:
+    context: ./airflow
+    dockerfile: Dockerfile
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
@@ -10,10 +12,12 @@ x-airflow-common: &airflow-common
     PIPELINE_DB_URL: postgresql+psycopg2://fleet:fleet@postgres:5432/fleet
     KAFKA_BOOTSTRAP: kafka:9092
     SIM_DAY_SECONDS: ${SIM_DAY_SECONDS:-300}
+    AIRFLOW_CONN_SPARK_DEFAULT: spark://spark-master:7077
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./processing:/opt/airflow/processing
     - ./common:/opt/airflow/common
+    - ./producers/drops:/opt/airflow/producers_drops
     - airflow_logs:/opt/airflow/logs
   depends_on:
     - postgres

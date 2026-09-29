@@ -18,7 +18,7 @@ import sys
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
-    StringType, StructField, StructType, DoubleType, BooleanType,
+    StringType, StructField, StructType, DoubleType, BooleanType, IntegerType,
 )
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
@@ -44,6 +44,7 @@ TELEMETRY_SCHEMA = StructType([
     StructField("zone", StringType()),
     StructField("timestamp", DoubleType()),
     StructField("service_flag", BooleanType(), True),
+    StructField("sim_day", IntegerType(), True),
 ])
 
 JDBC_URL = "jdbc:" + DB_URL.replace("postgresql://", "postgresql://")
@@ -67,6 +68,29 @@ def write_batch_to_postgres(batch_df, batch_id: int):
         .save()
     )
     log.info("batch written", extra={"fields": {"batch_id": batch_id, "rows": count}})
+
+
+def write_raw_batch_to_postgres(batch_df, batch_id: int):
+    """foreachBatch sink: append raw telemetry events to Postgres."""
+    count = batch_df.count()
+    if count == 0:
+        return
+        
+    # Select only columns that match the Postgres schema
+    cols = ["trip_id", "driver_id", "vehicle_id", "lat", "lon", "speed", "status", "fare", "zone", "timestamp", "sim_day"]
+    db_df = batch_df.select(*cols)
+
+    (
+        db_df.write.format("jdbc")
+        .option("url", JDBC_URL)
+        .option("dbtable", "raw_telemetry")
+        .option("user", "fleet")
+        .option("password", "fleet")
+        .option("driver", "org.postgresql.Driver")
+        .mode("append")
+        .save()
+    )
+    log.info("raw batch written", extra={"fields": {"batch_id": batch_id, "rows": count}})
 
 
 def main():
@@ -108,7 +132,7 @@ def main():
         )
     )
 
-    log.info("speed layer streaming query starting")
+    log.info("speed layer streaming queries starting")
 
     query = (
         metrics.writeStream.outputMode("append")
@@ -118,12 +142,21 @@ def main():
         .start()
     )
 
+    raw_query = (
+        events.writeStream.outputMode("append")
+        .foreachBatch(write_raw_batch_to_postgres)
+        .option("checkpointLocation", "/tmp/checkpoints/speed_layer_raw")
+        .trigger(processingTime="15 seconds")
+        .start()
+    )
+
+
     # NOTE: per-vehicle idle-duration threshold alerting (IDLE_ALERT_SECONDS) and the
     # NoDataWatchdog health check are simplest to run as a lightweight side consumer
     # (see idle_alert_watcher.py) rather than inside this same streaming query, since
     # Structured Streaming aggregation state isn't a convenient place to fire external
     # side-effecting alerts per-event. Start that watcher alongside this job.
-    query.awaitTermination()
+    spark.streams.awaitAnyTermination()
 
 
 if __name__ == "__main__":
