@@ -76,6 +76,7 @@ with DAG(
             "--sim-day", "{{ ti.xcom_pull(task_ids='prepare_args', key='sim_day') }}",
             "--cost-file", "{{ ti.xcom_pull(task_ids='prepare_args', key='cost_file') }}"
         ],
+        packages="org.postgresql:postgresql:42.7.3",
     )
 
     check_output = BashOperator(

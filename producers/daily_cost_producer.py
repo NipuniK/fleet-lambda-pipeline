@@ -15,6 +15,7 @@ import time
 from kafka import KafkaProducer
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "common"))
 from logging_config import get_logger  # noqa: E402
 from schemas import DAILY_COST_TOPIC  # noqa: E402
 from sim_clock import get_sim_day  # noqa: E402

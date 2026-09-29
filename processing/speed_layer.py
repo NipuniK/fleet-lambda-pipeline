@@ -22,6 +22,7 @@ from pyspark.sql.types import (
 )
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "common"))
 from logging_config import get_logger, log_alert, NoDataWatchdog  # noqa: E402
 from schemas import TELEMETRY_TOPIC  # noqa: E402
 
@@ -47,7 +48,9 @@ TELEMETRY_SCHEMA = StructType([
     StructField("sim_day", IntegerType(), True),
 ])
 
-JDBC_URL = "jdbc:" + DB_URL.replace("postgresql://", "postgresql://")
+import urllib.parse
+parsed = urllib.parse.urlparse(DB_URL)
+JDBC_URL = f"jdbc:postgresql://{parsed.hostname}:{parsed.port}{parsed.path}"
 
 
 def write_batch_to_postgres(batch_df, batch_id: int):
@@ -120,9 +123,9 @@ def main():
     metrics = (
         events.groupBy(F.window("event_time", "1 minute"), F.col("zone"))
         .agg(
-            F.countDistinct("vehicle_id").alias("active_vehicles"),
+            F.approx_count_distinct("vehicle_id").alias("active_vehicles"),
             (F.sum(F.when(F.col("status") == "idle", 1).otherwise(0)) / F.count("*")).alias("idle_ratio"),
-            F.countDistinct(F.when(F.col("status") == "on_trip", F.col("trip_id"))).alias("trips_in_window"),
+            F.approx_count_distinct(F.when(F.col("status") == "on_trip", F.col("trip_id"))).alias("trips_in_window"),
             F.sum("fare").alias("total_fare"),
         )
         .select(

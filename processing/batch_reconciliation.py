@@ -20,12 +20,15 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "common"))
 from logging_config import get_logger  # noqa: E402
 
 log = get_logger("processing.batch_reconciliation")
 
 DB_URL = os.environ.get("PIPELINE_DB_URL", "postgresql://fleet:fleet@localhost:5432/fleet")
-JDBC_URL = "jdbc:" + DB_URL.replace("postgresql://", "postgresql://")
+import urllib.parse
+parsed = urllib.parse.urlparse(DB_URL)
+JDBC_URL = f"jdbc:postgresql://{parsed.hostname}:{parsed.port}{parsed.path}"
 
 
 def main(sim_day: int, cost_file: str):
@@ -68,6 +71,16 @@ def main(sim_day: int, cost_file: str):
         .withColumn("net_profit", F.col("total_fare") - F.col("total_cost"))
         .withColumn("unprofitable", F.col("net_profit") < 0)
         .withColumn("sim_day", F.lit(sim_day))
+        .select(
+            "vehicle_id",
+            "total_fare",
+            "fuel_cost",
+            "maintenance_cost",
+            "total_cost",
+            "net_profit",
+            "unprofitable",
+            "sim_day"
+        )
     )
 
     (

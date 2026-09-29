@@ -38,11 +38,11 @@ Check items off as your group completes them. Assign owners where marked `[owner
 
 ## Phase 2 — Get it running end-to-end (Days 3–5) `[owner: ?]`
 
-- [ ] `docker compose up -d --build`, bring services up incrementally, check logs per service
-- [ ] Confirm producer messages land in Kafka (`kafka-console-consumer` sanity check)
-- [ ] Confirm `speed-layer` populates both `fleet_live_metrics` and `raw_telemetry`
-- [ ] Run one full sim-day cycle, confirm Airflow DAG populates `vehicle_profitability`
-- [ ] Hit all API endpoints, confirm real data returned
+- [x] `docker compose up -d --build`, bring services up incrementally, check logs per service
+- [x] Confirm producer messages land in Kafka (`kafka-console-consumer` sanity check)
+- [x] Confirm `speed-layer` populates both `fleet_live_metrics` and `raw_telemetry`
+- [x] Run one full sim-day cycle, confirm Airflow DAG populates `vehicle_profitability`
+- [x] Hit all API endpoints, confirm real data returned
 - [ ] Budget real debugging time — this phase is the highest risk
 
 ## Phase 3 — Consolidated report/dashboard deliverable (Days 5–7) `[owner: ?]`

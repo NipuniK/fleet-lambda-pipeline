@@ -17,6 +17,7 @@ import psycopg2
 from kafka import KafkaConsumer
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "common"))
 from logging_config import get_logger, log_alert, NoDataWatchdog  # noqa: E402
 from schemas import TELEMETRY_TOPIC  # noqa: E402
 

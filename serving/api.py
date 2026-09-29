@@ -14,6 +14,7 @@ from fastapi import FastAPI, HTTPException
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "common"))
 from logging_config import get_logger  # noqa: E402
 
 log = get_logger("serving.api")

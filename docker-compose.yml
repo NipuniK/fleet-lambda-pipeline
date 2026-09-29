@@ -6,13 +6,13 @@ x-airflow-common: &airflow-common
     dockerfile: Dockerfile
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://fleet:fleet@postgres:5432/fleet
     AIRFLOW__CORE__LOAD_EXAMPLES: "false"
     AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
     PIPELINE_DB_URL: postgresql+psycopg2://fleet:fleet@postgres:5432/fleet
     KAFKA_BOOTSTRAP: kafka:9092
     SIM_DAY_SECONDS: ${SIM_DAY_SECONDS:-300}
-    AIRFLOW_CONN_SPARK_DEFAULT: spark://spark-master:7077
+    AIRFLOW_CONN_SPARK_DEFAULT: '{"conn_type": "spark", "host": "local[*]"}'
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./processing:/opt/airflow/processing
@@ -54,16 +54,13 @@ services:
       - ./storage/init:/docker-entrypoint-initdb.d
 
   spark-master:
-    image: bitnami/spark:3.5
-    environment:
-      SPARK_MODE: master
+    image: apache/spark:3.5.0
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     ports: ["7077:7077", "8081:8080"]
 
   spark-worker:
-    image: bitnami/spark:3.5
-    environment:
-      SPARK_MODE: worker
-      SPARK_MASTER_URL: spark://spark-master:7077
+    image: apache/spark:3.5.0
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     depends_on: [spark-master]
 
   producers:
@@ -74,6 +71,8 @@ services:
       KAFKA_BOOTSTRAP: kafka:9092
       SIM_DAY_SECONDS: ${SIM_DAY_SECONDS:-300}
     depends_on: [kafka]
+    volumes:
+      - ./producers/drops:/app/drops
     command: ["python", "run_both.py"]
 
   speed-layer:
@@ -86,7 +85,7 @@ services:
       PIPELINE_DB_URL: postgresql+psycopg2://fleet:fleet@postgres:5432/fleet
       IDLE_ALERT_SECONDS: 600
       NO_DATA_ALERT_SECONDS: 30
-    command: ["python", "speed_layer.py"]
+    command: ["python3", "speed_layer.py"]
 
   api:
     build:
