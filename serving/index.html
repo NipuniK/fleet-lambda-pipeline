@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Ops Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-purple: #c084fc;
+            --accent-green: #34d399;
+            --accent-red: #f87171;
+            --danger-bg: rgba(248, 113, 113, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(192, 132, 252, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow-x: auto;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .badge.danger {
+            background: var(--danger-bg);
+            color: var(--accent-red);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        input[type="number"] {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            width: 80px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--accent-blue);
+        }
+
+        button {
+            background: linear-gradient(to right, var(--accent-blue), #2563eb);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: opacity 0.2s;
+            font-family: inherit;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .empty-state {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 2rem;
+            font-style: italic;
+        }
+        
+        /* Full width for bottom card */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .numeric {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Fleet Ops Live Dashboard</h1>
+        <div class="status-indicator">
+            <div class="pulse"></div>
+            Live Monitoring Active
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- Live Utilization -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Live Zone Utilization</h2>
+            </div>
+            <table id="utilization-table">
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>Window Time</th>
+                        <th>Active Vehicles</th>
+                        <th>Idle Ratio</th>
+                        <th>Fare ($)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="5" class="empty-state">Loading utilization data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Live Alerts -->
+        <div class="card">
+            <div class="card-header">
+                <h2>System Alerts</h2>
+            </div>
+            <table id="alerts-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Rule</th>
+                        <th>Vehicle / Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="3" class="empty-state">Loading alerts...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Profitability Report (Batch) -->
+        <div class="card full-width">
+            <div class="card-header">
+                <h2>Daily Profitability Report (Batch)</h2>
+                <div class="controls">
+                    <label for="sim-day-input">Sim Day:</label>
+                    <input type="number" id="sim-day-input" value="1" min="0">
+                    <button onclick="fetchProfitability()">Load Report</button>
+                </div>
+            </div>
+            <table id="profitability-table">
+                <thead>
+                    <tr>
+                        <th>Vehicle ID</th>
+                        <th>Total Fare</th>
+                        <th>Fuel Cost</th>
+                        <th>Maint. Cost</th>
+                        <th>Total Cost</th>
+                        <th>Net Profit</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="7" class="empty-state">Click 'Load Report' to fetch data.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Utility for formatting currency
+    const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+
+    // Fetch Live Utilization
+    async function fetchUtilization() {
+        try {
+            const res = await fetch('/live/utilization?limit=10');
+            const data = await res.json();
+            const tbody = document.querySelector('#utilization-table tbody');
+            
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No live data available.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map(row => {
+                const time = new Date(row.window_end).toLocaleTimeString();
+                const ratio = (row.idle_ratio * 100).toFixed(1) + '%';
+                const ratioClass = row.idle_ratio > 0.6 ? 'class="numeric" style="color: var(--accent-red);"' : 'class="numeric"';
+                
+                return `
+                    <tr>
+                        <td>${row.zone}</td>
+                        <td class="numeric">${time}</td>
+                        <td class="numeric">${row.active_vehicles}</td>
+                        <td ${ratioClass}>${ratio}</td>
+                        <td class="numeric">${formatCurrency(row.total_fare)}</td>
+                    </tr>
+                `;
+            }).join('');
+        } catch (e) {
+            console.error('Error fetching utilization', e);
+        }
+    }
+
+    // Fetch Live Alerts
+    async function fetchAlerts() {
+        try {
+            const res = await fetch('/live/alerts?limit=10');
+            const data = await res.json();
+            const tbody = document.querySelector('#alerts-table tbody');
+            
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No active alerts. All clear!</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = data.map(row => {
+                const time = new Date(row.created_at).toLocaleTimeString();
+                return `
+                    <tr>
+                        <td class="numeric">${time}</td>
+                        <td><span class="badge danger">${row.rule}</span></td>
+                        <td>${row.vehicle_id || 'System'} - ${row.detail}</td>
+                    </tr>
+                `;
+            }).join('');
+        } catch (e) {
+            console.error('Error fetching alerts', e);
+        }
+    }
+
+    // Fetch Batch Profitability
+    async function fetchProfitability() {
+        const day = document.getElementById('sim-day-input').value;
+        const tbody = document.querySelector('#profitability-table tbody');
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Loading...</td></tr>';
+        
+        try {
+            const res = await fetch(`/reports/profitability/${day}`);
+            
+            if (!res.ok) {
+                const err = await res.json();
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-state">${err.detail || 'Error loading report'}</td></tr>`;
+                return;
+            }
+            
+            const data = await res.json();
+            
+            if (!data || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No profitability report found for Sim Day ${day}.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = data.map(row => {
+                const isUnprofitable = row.unprofitable;
+                const profitColor = isUnprofitable ? 'var(--accent-red)' : 'var(--accent-green)';
+                const badgeHtml = isUnprofitable 
+                    ? `<span class="badge danger">Unprofitable</span>`
+                    : `<span class="badge" style="background: rgba(52, 211, 153, 0.1); color: var(--accent-green); border: 1px solid rgba(52,211,153,0.2)">Profitable</span>`;
+
+                return `
+                    <tr>
+                        <td><strong>${row.vehicle_id}</strong></td>
+                        <td class="numeric">${formatCurrency(row.total_fare)}</td>
+                        <td class="numeric">${formatCurrency(row.fuel_cost)}</td>
+                        <td class="numeric">${formatCurrency(row.maintenance_cost)}</td>
+                        <td class="numeric">${formatCurrency(row.total_cost)}</td>
+                        <td class="numeric" style="color: ${profitColor}; font-weight: 600;">${formatCurrency(row.net_profit)}</td>
+                        <td>${badgeHtml}</td>
+                    </tr>
+                `;
+            }).join('');
+        } catch (e) {
+            console.error('Error fetching profitability', e);
+            tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Connection error. Could not load report.</td></tr>`;
+        }
+    }
+
+    // Initialization and Poll Intervals
+    fetchUtilization();
+    fetchAlerts();
+    fetchProfitability();
+
+    setInterval(fetchUtilization, 5000);
+    setInterval(fetchAlerts, 5000);
+</script>
+
+</body>
+</html>

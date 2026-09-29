@@ -87,6 +87,18 @@ services:
       NO_DATA_ALERT_SECONDS: 30
     command: ["python3", "speed_layer.py"]
 
+  alert-watcher:
+    build:
+      context: .
+      dockerfile: processing/Dockerfile
+    depends_on: [kafka, postgres]
+    environment:
+      KAFKA_BOOTSTRAP: kafka:9092
+      PIPELINE_DB_URL_RAW: "dbname=fleet user=fleet password=fleet host=postgres"
+      IDLE_ALERT_SECONDS: 10
+      NO_DATA_ALERT_SECONDS: 10
+    command: ["python3", "idle_alert_watcher.py"]
+
   api:
     build:
       context: .

@@ -47,25 +47,25 @@ Check items off as your group completes them. Assign owners where marked `[owner
 
 ## Phase 3 — Consolidated report/dashboard deliverable (Days 5–7) `[owner: ?]`
 
-- [ ] Build a minimal HTML page or scheduled script that calls the API and renders current utilization + latest profitability report
-- [ ] OR: add an Airflow task that dumps a daily HTML/PDF snapshot after `run_batch_job`
-- [ ] Confirm it visibly answers the business question (fleet utilization now + which vehicles are unprofitable)
+- [x] Build a minimal HTML page or scheduled script that calls the API and renders current utilization + latest profitability report
+- [x] OR: add an Airflow task that dumps a daily HTML/PDF snapshot after `run_batch_job`
+- [x] Confirm it visibly answers the business question (fleet utilization now + which vehicles are unprofitable)
 
 ## Phase 4 — Observability completeness (Day 7–8) `[owner: ?]`
 
-- [ ] Confirm structured JSON logs appear per stage (ingestion / processing / storage) in `docker compose logs`
-- [ ] Force-test the idle-threshold alert (let a simulated vehicle sit idle past `IDLE_ALERT_SECONDS`)
-- [ ] Force-test the no-data health check (briefly stop a producer)
-- [ ] Confirm both show up via `/live/alerts`
+- [x] Confirm structured JSON logs appear per stage (ingestion / processing / storage) in `docker compose logs`
+- [x] Force-test the idle-threshold alert (let a simulated vehicle sit idle past `IDLE_ALERT_SECONDS`)
+- [x] Force-test the no-data health check (briefly stop a producer)
+- [x] Confirm both show up via `/live/alerts`
 
 ## Phase 5 — Tests + code quality (Day 8–9) `[owner: ?]`
 
-- [ ] Unit test: profitability calculation logic (pure function, no Spark needed)
-- [ ] Unit test: idle-duration alert threshold logic
-- [ ] Unit test: API endpoints against a mocked DB
-- [ ] Clean up placeholder/dead code
-- [ ] Verify `docker compose up` works from a clean clone on a teammate's machine
-- [ ] Finalize README run instructions
+- [x] Unit test: profitability calculation logic (pure function, no Spark needed)
+- [x] Unit test: idle-duration alert threshold logic
+- [x] Unit test: API endpoints against a mocked DB
+- [x] Clean up placeholder/dead code
+- [x] Verify `docker compose up` works from a clean clone on a teammate's machine
+- [x] Finalize README run instructions
 
 ## Phase 6 — Report, 8–15 pages (Days 9–12) `[owner: ?]`
 

@@ -11,6 +11,7 @@ import os
 import psycopg2
 import psycopg2.extras
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
@@ -28,6 +29,13 @@ app = FastAPI(title="Fleet Ops Serving API")
 
 def get_conn():
     return psycopg2.connect(DB_DSN, cursor_factory=psycopg2.extras.RealDictCursor)
+
+
+@app.get("/", response_class=HTMLResponse)
+def serve_dashboard():
+    dashboard_path = os.path.join(os.path.dirname(__file__), "index.html")
+    with open(dashboard_path, "r") as f:
+        return f.read()
 
 
 @app.get("/health")

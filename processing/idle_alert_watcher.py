@@ -75,7 +75,9 @@ def main():
                 already_alerted.discard(vid)
 
         if not got_message:
-            watchdog.check()
+            if watchdog.check():
+                elapsed = time.time() - watchdog.last_beat
+                write_alert(conn, "no_data", "system", {"elapsed_seconds": round(elapsed, 1)})
         time.sleep(1)
 
 
