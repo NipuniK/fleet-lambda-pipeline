@@ -71,6 +71,7 @@ services:
       KAFKA_BOOTSTRAP: kafka:9092
       SIM_DAY_SECONDS: ${SIM_DAY_SECONDS:-300}
     depends_on: [kafka]
+    restart: on-failure
     volumes:
       - ./producers/drops:/app/drops
     command: ["python", "run_both.py"]
@@ -92,6 +93,7 @@ services:
       context: .
       dockerfile: processing/Dockerfile
     depends_on: [kafka, postgres]
+    restart: on-failure
     environment:
       KAFKA_BOOTSTRAP: kafka:9092
       PIPELINE_DB_URL_RAW: "dbname=fleet user=fleet password=fleet host=postgres"

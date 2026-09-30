@@ -40,6 +40,8 @@ def write_alert(conn, rule: str, vehicle_id: str, detail: dict):
 
 
 def main():
+    print("Waiting 15 seconds for Kafka to be fully ready...")
+    time.sleep(15)
     consumer = KafkaConsumer(
         TELEMETRY_TOPIC,
         bootstrap_servers=KAFKA_BOOTSTRAP,
