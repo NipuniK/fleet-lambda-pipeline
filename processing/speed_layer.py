@@ -116,12 +116,12 @@ def main():
         raw.select(F.from_json(F.col("value").cast("string"), TELEMETRY_SCHEMA).alias("e"))
         .select("e.*")
         .withColumn("event_time", F.to_timestamp(F.col("timestamp")))
-        .withWatermark("event_time", "1 minute")
+        .withWatermark("event_time", "15 seconds")
     )
 
     # Meaningful transformation: windowed aggregation by zone, not pass-through.
     metrics = (
-        events.groupBy(F.window("event_time", "1 minute"), F.col("zone"))
+        events.groupBy(F.window("event_time", "15 seconds"), F.col("zone"))
         .agg(
             F.approx_count_distinct("vehicle_id").alias("active_vehicles"),
             (F.sum(F.when(F.col("status") == "idle", 1).otherwise(0)) / F.count("*")).alias("idle_ratio"),
