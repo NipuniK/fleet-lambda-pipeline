@@ -258,7 +258,7 @@
                 <h2>Daily Profitability Report (Batch)</h2>
                 <div class="controls">
                     <label for="sim-day-input">Sim Day:</label>
-                    <input type="number" id="sim-day-input" value="1" min="0">
+                    <input type="number" id="sim-day-input" value="5" min="0">
                     <button onclick="fetchProfitability()">Load Report</button>
                 </div>
             </div>
@@ -392,10 +392,27 @@
         }
     }
 
+    // Auto-detect latest sim_day and load profitability
+    async function autoLoadProfitability() {
+        // Try sim_days from 20 down to 1 to find the latest one with data
+        for (let day = 20; day >= 1; day--) {
+            try {
+                const res = await fetch(`/reports/profitability/${day}`);
+                if (res.ok) {
+                    document.getElementById('sim-day-input').value = day;
+                    fetchProfitability();
+                    return;
+                }
+            } catch(e) {}
+        }
+        // fallback
+        fetchProfitability();
+    }
+
     // Initialization and Poll Intervals
     fetchUtilization();
     fetchAlerts();
-    fetchProfitability();
+    autoLoadProfitability();
 
     setInterval(fetchUtilization, 5000);
     setInterval(fetchAlerts, 5000);
