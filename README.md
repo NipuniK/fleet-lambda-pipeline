@@ -53,5 +53,4 @@ tests/         - Pytest suite
 - Health-check rule: `alert-watcher` triggers a `no_data` alert if no telemetry event is processed within 10s of wall-clock time.
 - Threshold alert: `alert-watcher` triggers a `vehicle_idle_threshold` alert if a vehicle is idle beyond `IDLE_ALERT_SECONDS`.
 
-## Team contributions
-_Fill in before submission — who owns ingestion, processing, serving, observability, report._
+
