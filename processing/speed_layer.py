@@ -1,21 +1,18 @@
 """Speed layer (Lambda's real-time path).
 
 Consumes the `telemetry` Kafka topic continuously with Spark Structured Streaming.
-For each 1-minute tumbling window x zone, computes:
-  - active_vehicles, idle_ratio, trips_per_hour (extrapolated), total_fare (earnings)
-and upserts the result into `fleet_live_metrics` in Postgres via foreachBatch.
+For each micro-batch, computes per-zone:
+  - active_vehicles, idle_ratio, trips_in_window, total_fare
+and writes the result into `fleet_live_metrics` in Postgres via foreachBatch.
 
-Also raises a threshold alert (structured log, written to `pipeline_alerts`) when a
-single vehicle has been continuously idle beyond IDLE_ALERT_SECONDS, and a health-check
-alert if no telemetry event has been seen within NO_DATA_ALERT_SECONDS.
-
-This is the "not just pass-through" transformation for the speed layer: windowed
-aggregation + per-vehicle idle-duration tracking, not a raw copy of events.
+This approach aggregates inside foreachBatch rather than using Spark's windowed
+aggregation, which avoids watermark emission delays and gives immediate UI updates.
 """
 import os
 import sys
+import time
 
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
     StringType, StructField, StructType, DoubleType, BooleanType, IntegerType,
@@ -23,15 +20,13 @@ from pyspark.sql.types import (
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "common"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "common"))
-from logging_config import get_logger, log_alert, NoDataWatchdog  # noqa: E402
+from logging_config import get_logger  # noqa: E402
 from schemas import TELEMETRY_TOPIC  # noqa: E402
 
 log = get_logger("processing.speed_layer")
 
 KAFKA_BOOTSTRAP = os.environ.get("KAFKA_BOOTSTRAP", "localhost:29092")
 DB_URL = os.environ.get("PIPELINE_DB_URL", "postgresql://fleet:fleet@localhost:5432/fleet")
-IDLE_ALERT_SECONDS = int(os.environ.get("IDLE_ALERT_SECONDS", 600))
-NO_DATA_ALERT_SECONDS = int(os.environ.get("NO_DATA_ALERT_SECONDS", 30))
 
 TELEMETRY_SCHEMA = StructType([
     StructField("trip_id", StringType()),
@@ -51,17 +46,39 @@ TELEMETRY_SCHEMA = StructType([
 import urllib.parse
 parsed = urllib.parse.urlparse(DB_URL)
 JDBC_URL = f"jdbc:postgresql://{parsed.hostname}:{parsed.port}{parsed.path}"
+JDBC_PROPS = {
+    "user": "fleet",
+    "password": "fleet",
+    "driver": "org.postgresql.Driver",
+}
 
 
-def write_batch_to_postgres(batch_df, batch_id: int):
-    """foreachBatch sink: append this micro-batch's window aggregates to Postgres.
-    A daily/hourly view can be built on top via a simple GROUP BY in the serving layer,
-    or you can swap this for an UPSERT if you want strictly one row per (window, zone)."""
+def write_metrics_batch(batch_df: DataFrame, batch_id: int):
+    """Aggregate per micro-batch by zone and write live metrics to Postgres."""
     count = batch_df.count()
     if count == 0:
         return
+
+    now = time.time()
+    window_start = now - 15
+    window_end = now
+
+    agg = (
+        batch_df
+        .groupBy("zone")
+        .agg(
+            F.approx_count_distinct("vehicle_id").alias("active_vehicles"),
+            (F.sum(F.when(F.col("status") == "idle", 1).otherwise(0)) / F.count("*")).alias("idle_ratio"),
+            F.approx_count_distinct(F.when(F.col("status") == "on_trip", F.col("trip_id"))).alias("trips_in_window"),
+            F.sum("fare").alias("total_fare"),
+        )
+        .withColumn("window_start", F.lit(window_start).cast("timestamp"))
+        .withColumn("window_end", F.lit(window_end).cast("timestamp"))
+        .select("window_start", "window_end", "zone", "active_vehicles", "idle_ratio", "trips_in_window", "total_fare")
+    )
+
     (
-        batch_df.write.format("jdbc")
+        agg.write.format("jdbc")
         .option("url", JDBC_URL)
         .option("dbtable", "fleet_live_metrics")
         .option("user", "fleet")
@@ -70,16 +87,15 @@ def write_batch_to_postgres(batch_df, batch_id: int):
         .mode("append")
         .save()
     )
-    log.info("batch written", extra={"fields": {"batch_id": batch_id, "rows": count}})
+    log.info("metrics batch written", extra={"fields": {"batch_id": batch_id, "events": count}})
 
 
-def write_raw_batch_to_postgres(batch_df, batch_id: int):
+def write_raw_batch_to_postgres(batch_df: DataFrame, batch_id: int):
     """foreachBatch sink: append raw telemetry events to Postgres."""
     count = batch_df.count()
     if count == 0:
         return
-        
-    # Select only columns that match the Postgres schema
+
     cols = ["trip_id", "driver_id", "vehicle_id", "lat", "lon", "speed", "status", "fare", "zone", "timestamp", "sim_day"]
     db_df = batch_df.select(*cols)
 
@@ -115,50 +131,30 @@ def main():
     events = (
         raw.select(F.from_json(F.col("value").cast("string"), TELEMETRY_SCHEMA).alias("e"))
         .select("e.*")
-        .withColumn("event_time", F.to_timestamp(F.col("timestamp")))
-        .withWatermark("event_time", "15 seconds")
-    )
-
-    # Meaningful transformation: windowed aggregation by zone, not pass-through.
-    metrics = (
-        events.groupBy(F.window("event_time", "15 seconds"), F.col("zone"))
-        .agg(
-            F.approx_count_distinct("vehicle_id").alias("active_vehicles"),
-            (F.sum(F.when(F.col("status") == "idle", 1).otherwise(0)) / F.count("*")).alias("idle_ratio"),
-            F.approx_count_distinct(F.when(F.col("status") == "on_trip", F.col("trip_id"))).alias("trips_in_window"),
-            F.sum("fare").alias("total_fare"),
-        )
-        .select(
-            F.col("window.start").alias("window_start"),
-            F.col("window.end").alias("window_end"),
-            "zone", "active_vehicles", "idle_ratio", "trips_in_window", "total_fare",
-        )
     )
 
     log.info("speed layer streaming queries starting")
 
-    query = (
-        metrics.writeStream.outputMode("append")
-        .foreachBatch(write_batch_to_postgres)
-        .option("checkpointLocation", "/tmp/checkpoints/speed_layer")
-        .trigger(processingTime="15 seconds")
+    # Write aggregated live metrics every 10 seconds
+    metrics_query = (
+        events.writeStream
+        .outputMode("append")
+        .foreachBatch(write_metrics_batch)
+        .option("checkpointLocation", "/tmp/checkpoints/speed_layer_metrics")
+        .trigger(processingTime="10 seconds")
         .start()
     )
 
+    # Write raw events for batch layer
     raw_query = (
-        events.writeStream.outputMode("append")
+        events.writeStream
+        .outputMode("append")
         .foreachBatch(write_raw_batch_to_postgres)
         .option("checkpointLocation", "/tmp/checkpoints/speed_layer_raw")
         .trigger(processingTime="15 seconds")
         .start()
     )
 
-
-    # NOTE: per-vehicle idle-duration threshold alerting (IDLE_ALERT_SECONDS) and the
-    # NoDataWatchdog health check are simplest to run as a lightweight side consumer
-    # (see idle_alert_watcher.py) rather than inside this same streaming query, since
-    # Structured Streaming aggregation state isn't a convenient place to fire external
-    # side-effecting alerts per-event. Start that watcher alongside this job.
     spark.streams.awaitAnyTermination()
 
 
